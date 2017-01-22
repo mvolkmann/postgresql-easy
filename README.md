@@ -1,7 +1,7 @@
 This is a Node module that makes it very simple
 to interact with a single PostgreSQL database.
 
-To install this, run `npm install -S postgresql-easy`.
+To install this, run `npm install -S postgresql-easy`
 
 To use this, `const pg = require('postgresql-easy');`
 
@@ -20,7 +20,7 @@ The config object can contain these properties:
 * `database`: the name of the database to use
 * `debug`: true to output messages describing each action; defaults to false
 * `host`: defaults to localhost
-* `idleTimeoutMillis`: time before a client is closed; default is 30000
+* `idleTimeoutMillis`: time before connection is closed; default is 30000
 * `max`: maximum number of clients in pool; default is 10
 * `password`: if database requires authentication
 * `port`: defaults to 5432
@@ -91,7 +91,7 @@ pg.getById('flavors', 7)
 
 ## `insert`
 This inserts a record into a given table.
-The keys of obj must be column names
+The keys of obj are column names
 and their values are the values to insert.
 
 ````
