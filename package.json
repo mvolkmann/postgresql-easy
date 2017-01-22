@@ -1,0 +1,22 @@
+{
+  "name": "postgresql-easy",
+  "version": "1.0.0",
+  "description": "A Node package for interacting with a PostgreSQL database",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mvolkmann/postgresql-easy.git"
+  },
+  "keywords": [
+    "Node",
+    "PostgreSQL"
+  ],
+  "author": "R. Mark Volkmann <r.mark.volkmann@gmail.com> (http://ociweb.com/mark)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mvolkmann/postgresql-easy/issues"
+  },
+  "homepage": "https://github.com/mvolkmann/postgresql-easy#readme"
+}
