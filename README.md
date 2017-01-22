@@ -1,19 +1,12 @@
 This is a Node module that makes it very simple
-to interact with a single PostgreSQL database.
+to interact with PostgreSQL databases.
 
 To install this, run `npm install -S postgresql-easy`
 
-To use this, `const pg = require('postgresql-easy');`
-
-This module provides seven functions.
-
-## `configure`
-This configures a PostgreSQLconnection pool.
-It must be called before the other functions.
-If not, a "pool not configured" error will be thrown.
-
+To use this,
 ````
-pg.configure({database: 'ice-cream'});
+const PgConnection = require('postgresql-easy');
+const pg = new PgConnection(config);
 ````
 
 The config object can contain these properties:
@@ -27,6 +20,8 @@ The config object can contain these properties:
 * `user`: if database requires authentication
 
 The only one of these that is always required is "database".
+
+PgConnection objects provide seven methods.
 
 ## `deleteAll`
 This deletes all records from a given table.
