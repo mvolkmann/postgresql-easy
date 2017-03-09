@@ -115,7 +115,7 @@ pg.query('select name from flavors where calories < 150')
   });
 
 const sql = 'select name from flavors where calories < $1 and cost < $2';
-pg.query(sql, [200, 3])
+pg.query(sql, 200, 3)
   .then(result => {
     // Do something with the result set in result.rows.
   })
