@@ -4,10 +4,10 @@ to interact with PostgreSQL databases.
 To install this, run `npm install -S postgresql-easy`
 
 To use this,
-````
+```js
 const PgConnection = require('postgresql-easy');
 const pg = new PgConnection(config);
-````
+```
 
 The config object can contain these properties:
 * `database`: the name of the database to use
@@ -26,7 +26,7 @@ PgConnection objects provide seven methods.
 ## `deleteAll`
 This deletes all records from a given table.
 
-````
+```js
 pg.deleteAll('flavors')
   .then(() => {
     // Do something after successful delete.
@@ -34,13 +34,13 @@ pg.deleteAll('flavors')
   .catch(err => {
     // Handle the error.
   });
-````
+```
 
 ## `deleteById`
 This deletes a record from a given table by id.
 It requires the table to have a column named "id".
 
-````
+```js
 pg.delete('flavors', 7)
   .then(() => {
     // Do something after successful delete.
@@ -48,19 +48,19 @@ pg.delete('flavors', 7)
   .catch(err => {
     // Handle the error.
   });
-````
+```
 
 ## `disconnect`
 This disconnects from the database.
 
-````
+```js
 pg.disconnect();
-````
+```
 
 ## `getAll`
 This gets all records from a given table.
 
-````
+```js
 pg.getAll('flavors')
   .then(result => {
     // Process data in the array result.rows.
@@ -68,13 +68,13 @@ pg.getAll('flavors')
   .catch(err => {
     // Handle the error.
   });
-````
+```
 
 ## `getById`
 This gets a record from a given table by id.
 It requires the table to have a column named "id".
 
-````
+```js
 pg.getById('flavors', 7)
   .then(result => {
     // Process data in the array result.rows.
@@ -82,14 +82,14 @@ pg.getById('flavors', 7)
   .catch(err => {
     // Handle the error.
   });
-````
+```
 
 ## `insert`
 This inserts a record into a given table.
 The keys of obj are column names
 and their values are the values to insert.
 
-````
+```js
 pg.insert('flavors', {name: 'vanilla', calories: 100})
   .then(result => {
     // Do something after successful insert.
@@ -98,14 +98,14 @@ pg.insert('flavors', {name: 'vanilla', calories: 100})
   .catch(err => {
     // Handle the error.
   });
-````
+```
 
 ## `query`
 This executes a SQL query.
 It is the most general purpose function provided.
 It is used by several of the other functions.
 
-````
+```js
 pg.query('select name from flavors where calories < 150')
   .then(result => {
     // Do something with the result set in result.rows.
@@ -122,13 +122,13 @@ pg.query(sql, 200, 3)
   .catch(err => {
     // Handle the error.
   });
-````
+```
 
 ## `updateById`
 This updates a record in a given table by id.
 It requires the table to have a column named "id".
 
-````
+```js
 pg.updateById('flavors', 7, {name: 'chocolate', calories: 200})
   .then(result => {
     // Do something with the result set in result.rows.
@@ -137,4 +137,4 @@ pg.updateById('flavors', 7, {name: 'chocolate', calories: 200})
   .catch(err => {
     // Handle the error.
   });
-````
+```
