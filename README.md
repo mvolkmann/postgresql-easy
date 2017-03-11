@@ -22,6 +22,9 @@ The config object can contain these properties:
 The only one of these that is always required is "database".
 
 PgConnection objects provide seven methods.
+All but `disconnect` return a promise.
+One way to use the returned promise is to chain calls to `then` and `catch`.
+Another is to use `async` and `await`.
 
 ## `deleteAll`
 This deletes all records from a given table.
