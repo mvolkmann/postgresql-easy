@@ -46,9 +46,9 @@ class PgConnection {
    * Deletes all records from a given table.
    */
   deleteAll(tableName) {
-    const sql = 'delete from ' + tableName;
+    const sql = 'delete from $1';
     this.log('deleteAll: sql =', sql);
-    return this.query(sql);
+    return this.query(sql, tableName);
   }
 
   /**
@@ -56,9 +56,9 @@ class PgConnection {
    * This requires the table to have a column named "id".
    */
   deleteById(tableName, id) {
-    const sql = `delete from ${tableName} where id=${id}`;
+    const sql = 'delete from $1 where id=$2';
     this.log('delete: sql =', sql);
-    return this.query(sql);
+    return this.query(sql, tableName, id);
   }
 
   /**
@@ -76,9 +76,9 @@ class PgConnection {
    * Gets all records from a given table.
    */
   getAll(tableName) {
-    const sql = 'select * from ' + tableName;
+    const sql = 'select * from $1';
     this.log('getAll: sql =', sql);
-    return this.query(sql);
+    return this.query(sql, tableName);
   }
 
   /**
@@ -86,9 +86,9 @@ class PgConnection {
    * This requires the table to have a column named "id".
    */
   getById(tableName, id) {
-    const sql = `select * from ${tableName} where id=${id}`;
+    const sql = 'select * from $1 where id=$2';
     this.log('getById: sql =', sql);
-    return this.query(sql);
+    return this.query(sql, tableName, id);
   }
 
   /**
@@ -100,12 +100,10 @@ class PgConnection {
     const keys = Object.keys(obj);
     const values = keys.map(key => obj[key]);
     const cols = keys.join(',');
-    const placeholders =
-      values.map((v, index) => '$' + (index + 1)).join(',');
-    const sql =
-      `insert into ${tableName} (${cols}) values(${placeholders}) returning id`;
+    const placeholders = values.map((v, index) => '$' + (index + 3)).join(',');
+    const sql = 'insert into $1 ($2) values(${placeholders}) returning id';
     this.log('insert: sql =', sql);
-    return this.query(sql, ...values);
+    return this.query(sql, tableName, cols, ...values);
   }
 
   /**
@@ -138,9 +136,9 @@ class PgConnection {
       const value = typeof v === 'string' ? `'${v}'` : v;
       return `${key}=${value}`;
     });
-    const sql = `update ${tableName} set ${sets} where id=${id}`;
+    const sql = 'update $1 set $2 where id=$3';
     this.log('update: sql =', sql);
-    return this.query(sql);
+    return this.query(sql, tableName, sets, id);
   }
 }
 
