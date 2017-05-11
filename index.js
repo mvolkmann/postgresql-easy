@@ -100,10 +100,10 @@ class PgConnection {
     const keys = Object.keys(obj);
     const values = keys.map(key => obj[key]);
     const cols = keys.join(',');
-    const placeholders = values.map((v, index) => '$' + (index + 2)).join(',');
-    const sql = `insert into ${tableName} ($1) values(${placeholders}) returning id`;
+    const placeholders = values.map((v, index) => '$' + (index + 1)).join('');
+    const sql = `insert into ${tableName} (${cols}) values(${placeholders}) returning id`;
     this.log('insert: sql =', sql);
-    return this.query(sql, cols, ...values);
+    return this.query(sql, ...values);
   }
 
   /**
