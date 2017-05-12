@@ -136,7 +136,7 @@ class PgConnection {
       const value = typeof v === 'string' ? `'${v}'` : v;
       return `${key}=${value}`;
     });
-    const sql = `update ${tableName} set ${sets} where id=$2`;
+    const sql = `update ${tableName} set ${sets} where id=$1`;
     this.log('update: sql =', sql);
     return this.query(sql, id);
   }
