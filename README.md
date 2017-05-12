@@ -88,7 +88,8 @@ pg.getById('flavors', 7)
 ```
 
 ## `insert`
-This inserts a record into a given table.
+This inserts a record into a given table
+and returns the id of the new record.
 The keys of obj are column names
 and their values are the values to insert.
 
