@@ -115,13 +115,9 @@ class PgConnection {
     return new Promise((resolve, reject) => {
       if (!this.pool) return reject('pool not configured');
 
-      this.pool.connect((err, client, done) => {
-        if (err) return reject(err);
-        this.log('query: sql =', sql);
-        pool.query(sql, params, (err, result) => {
-          handle(resolve, reject, err, result);
-          done();
-        });
+      pool.query(sql, params, (err, result) => {
+        handle(resolve, reject, err, result);
+        done();
       });
     });
   }
