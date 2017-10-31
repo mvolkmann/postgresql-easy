@@ -118,7 +118,7 @@ class PgConnection {
       this.pool.connect((err, client, done) => {
         if (err) return reject(err);
         this.log('query: sql =', sql);
-        client.query(sql, params, (err, result) => {
+        pool.query(sql, params, (err, result) => {
           handle(resolve, reject, err, result);
           done();
         });
