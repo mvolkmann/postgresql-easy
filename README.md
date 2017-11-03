@@ -1,5 +1,6 @@
 This is a Node module that makes it very simple
 to interact with PostgreSQL databases.
+It has the same API as mysql-easier.
 
 To install this, run `npm install -S postgresql-easy`
 

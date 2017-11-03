@@ -39,7 +39,7 @@ class PgConnection {
   }
 
   log(...msg) {
-    if (this.debug) console.log('pg-simple.js:', msg.join(' '));
+    if (this.debug) console.log('postgresql-easy.js:', msg.join(' '));
   }
 
   /**
