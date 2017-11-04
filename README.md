@@ -1,6 +1,10 @@
+# postgresql-easy
+
+[![Build Status](https://secure.travis-ci.org/mvolkmann/postgresql-easy.png)](http://travis-ci.org/mvolkmann/postgresql-easy)
+
 This is a Node module that makes it very simple
 to interact with PostgreSQL databases.
-It has the same API as mysql-easier.
+It has the same API as https://github.com/mvolkmann/mysql-easier.
 
 To install this, run `npm install -S postgresql-easy`
 
@@ -9,6 +13,23 @@ To use this,
 const PgConnection = require('postgresql-easy');
 const pg = new PgConnection(config);
 ```
+
+## Demo
+
+To run the demo code, follow these steps:
+1) Start database daemon with "pg_ctl -D /usr/local/var/postgres start".
+2) Create the demo database with "createdb demo".
+3) Start interactive mode with "psql -d demo".
+4) Create a table with
+   create table demo_user (
+     id serial primary key,
+     username text,
+     password text
+   );
+5) Exit interactive mode with ctrl-d.
+6) Run the demo with "npm run demo".
+
+## API
 
 The config object can contain these properties:
 * `database`: the name of the database to use
@@ -143,17 +164,3 @@ pg.updateById('flavors', 7, {name: 'chocolate', calories: 200})
     // Handle the error.
   });
 ```
-
-## Demo
-To run the demo code, follow these steps:
-1) Start database daemon with "pg_ctl -D /usr/local/var/postgres start".
-2) Create the demo database with "createdb demo".
-3) Start interactive mode with "psql -d demo".
-4) Create a table with
-   create table demo_user (
-     id serial primary key,
-     username text,
-     password text
-   );
-5) Exit interactive mode with ctrl-d.
-6) Run the demo with "npm run demo".

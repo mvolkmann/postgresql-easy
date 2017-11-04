@@ -8,10 +8,10 @@ const pg = new PgConnection({
 });
 
 async function doIt() {
+  // Note that user is a reserved table name.
   const tableName = 'demo_user';
 
   try {
-    // Note that user is a reserved table name.
     await pg.deleteAll(tableName);
 
     const id1 = await pg.insert(
