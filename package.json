@@ -1,9 +1,11 @@
 {
   "name": "postgresql-easy",
-  "version": "1.1.14",
+  "version": "1.2.0",
   "description": "A Node package for interacting with a PostgreSQL database",
   "main": "index.js",
   "scripts": {
+    "demo": "node demo",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -18,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/mvolkmann/postgresql-easy/issues"
   },
-  "homepage": "https://github.com/mvolkmann/postgresql-easy#readme"
+  "homepage": "https://github.com/mvolkmann/postgresql-easy#readme",
+  "dependencies": {
+    "pg": "^7.3.0"
+  },
+  "devDependencies": {
+    "jest": "^21.2.1"
+  }
 }

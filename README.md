@@ -143,3 +143,17 @@ pg.updateById('flavors', 7, {name: 'chocolate', calories: 200})
     // Handle the error.
   });
 ```
+
+## Demo
+To run the demo code, follow these steps:
+1) Start database daemon with "pg_ctl -D /usr/local/var/postgres start".
+2) Create the demo database with "createdb demo".
+3) Start interactive mode with "psql -d demo".
+4) Create a table with
+   create table demo_user (
+     id serial primary key,
+     username text,
+     password text
+   );
+5) Exit interactive mode with ctrl-d.
+6) Run the demo with "npm run demo".

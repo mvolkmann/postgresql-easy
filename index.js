@@ -1,15 +1,5 @@
 const pg = require('pg');
-
-/**
- * Helper function for working with ES6 promises.
- */
-function handle(resolve, reject, err, result) {
-  if (err) {
-    reject(err);
-  } else {
-    resolve(result);
-  }
-}
+const SqlUtil = require('./sql-util');
 
 class PgConnection {
 
@@ -35,19 +25,14 @@ class PgConnection {
    */
   constructor(config) {
     this.pool = new pg.Pool(config);
-    this.debug = config.debug;
-  }
-
-  log(...msg) {
-    if (this.debug) console.log('postgresql-easy.js:', msg.join(' '));
+    this.sqlUtil = new SqlUtil(this.pool, config.debug);
   }
 
   /**
    * Deletes all records from a given table.
    */
   deleteAll(tableName) {
-    const sql = `delete from ${tableName}`;
-    this.log('deleteAll: sql =', sql);
+    const sql = this.sqlUtil.deleteAll(tableName);
     return this.query(sql);
   }
 
@@ -56,8 +41,7 @@ class PgConnection {
    * This requires the table to have a column named "id".
    */
   deleteById(tableName, id) {
-    const sql = `delete from ${tableName} where id=$1`;
-    this.log('delete: sql =', sql);
+    const sql = this.sqlUtil.deleteById(tableName, id);
     return this.query(sql, id);
   }
 
@@ -65,19 +49,14 @@ class PgConnection {
    * Disconnects from the database.
    */
   disconnect() {
-    this.log('disconnecting');
-    if (this.pool) {
-      this.pool.end();
-      this.pool = null;
-    }
+    this.sqlUtil.disconnect();
   }
 
   /**
    * Gets all records from a given table.
    */
   getAll(tableName) {
-    const sql = `select * from ${tableName}`;
-    this.log('getAll: sql =', sql);
+    const sql = this.sqlUtil.getAll(tableName);
     return this.query(sql);
   }
 
@@ -85,10 +64,10 @@ class PgConnection {
    * Gets a record from a given table by id.
    * This requires the table to have a column named "id".
    */
-  getById(tableName, id) {
-    const sql = `select * from ${tableName} where id=$1`;
-    this.log('getById: sql =', sql);
-    return this.query(sql, id);
+  async getById(tableName, id) {
+    const sql = this.sqlUtil.getById(tableName, id);
+    const rows = await this.query(sql, id);
+    return rows[0];
   }
 
   /**
@@ -96,14 +75,12 @@ class PgConnection {
    * The keys of obj are column names
    * and their values are the values to insert.
    */
-  insert(tableName, obj) {
+  async insert(tableName, obj) {
+    const sql = this.sqlUtil.insert(tableName, obj);
     const keys = Object.keys(obj);
     const values = keys.map(key => obj[key]);
-    const cols = keys.join(',');
-    const placeholders = values.map((v, index) => '$' + (index + 1)).join(',');
-    const sql = `insert into ${tableName} (${cols}) values(${placeholders}) returning id`;
-    this.log('insert: sql =', sql);
-    return this.query(sql, ...values);
+    const [row] = await this.query(sql, ...values);
+    return row ? row.id : -1;
   }
 
   /**
@@ -113,10 +90,18 @@ class PgConnection {
    */
   query(sql, ...params) {
     return new Promise((resolve, reject) => {
-      if (!this.pool) return reject('pool not configured');
-
-      this.pool.query(sql, params, (err, result) =>
-        handle(resolve, reject, err, result));
+      if (this.pool) {
+        this.pool.query(sql, params, (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            const {rowCount, rows} = result;
+            resolve(rowCount ? rows : []);
+          }
+        });
+      } else {
+        reject('pool not configured');
+      }
     });
   }
 
@@ -125,13 +110,7 @@ class PgConnection {
    * This requires the table to have a column named "id".
    */
   updateById(tableName, id, obj) {
-    const sets = Object.keys(obj).map(key => {
-      const v = obj[key];
-      const value = typeof v === 'string' ? `'${v}'` : v;
-      return `${key}=${value}`;
-    });
-    const sql = `update ${tableName} set ${sets} where id=$1`;
-    this.log('update: sql =', sql);
+    const sql = this.sqlUtil.updateById(tableName, id, obj);
     return this.query(sql, id);
   }
 }
