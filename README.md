@@ -53,13 +53,12 @@ Another is to use `async` and `await`.
 This deletes all records from a given table.
 
 ```js
-pg.deleteAll('flavors')
-  .then(() => {
-    // Do something after successful delete.
-  })
-  .catch(err => {
-    // Handle the error.
-  });
+try {
+  await pg.deleteAll('flavors');
+  // Do something after successful delete.
+} catch (e) {
+  // Handle the error.
+}
 ```
 
 ## `deleteById`
@@ -67,13 +66,12 @@ This deletes a record from a given table by id.
 It requires the table to have a column named "id".
 
 ```js
-pg.delete('flavors', 7)
-  .then(() => {
-    // Do something after successful delete.
-  })
-  .catch(err => {
-    // Handle the error.
-  });
+try {
+  await pg.delete('flavors', 7);
+  // Do something after successful delete.
+} catch (e) {
+  // Handle the error.
+}
 ```
 
 ## `disconnect`
@@ -87,13 +85,12 @@ pg.disconnect();
 This gets all records from a given table.
 
 ```js
-pg.getAll('flavors')
-  .then(result => {
-    // Process data in the array result.rows.
-  })
-  .catch(err => {
-    // Handle the error.
-  });
+try {
+  const result = await pg.getAll('flavors');
+  // Process data in the array result.rows.
+} catch (e) {
+  // Handle the error.
+}
 ```
 
 ## `getById`
@@ -101,13 +98,12 @@ This gets a record from a given table by id.
 It requires the table to have a column named "id".
 
 ```js
-pg.getById('flavors', 7)
-  .then(result => {
-    // Process data in the array result.rows.
-  })
-  .catch(err => {
-    // Handle the error.
-  });
+try {
+  const result = await pg.getById('flavors', 7);
+  // Process data in the array result.rows.
+} catch (e) {
+  // Handle the error.
+}
 ```
 
 ## `insert`
@@ -117,14 +113,13 @@ The keys of obj are column names
 and their values are the values to insert.
 
 ```js
-pg.insert('flavors', {name: 'vanilla', calories: 100})
-  .then(result => {
-    // Do something after successful insert.
-    // result.rows[0] will be an object describing the inserted row.
-  })
-  .catch(err => {
-    // Handle the error.
-  });
+try {
+  const result = pg.insert('flavors', {name: 'vanilla', calories: 100});
+  // Do something after successful insert.
+  // result.rows[0] will be an object describing the inserted row.
+} catch (e) {
+  // Handle the error.
+}
 ```
 
 ## `query`
@@ -133,22 +128,21 @@ It is the most general purpose function provided.
 It is used by several of the other functions.
 
 ```js
-pg.query('select name from flavors where calories < 150')
-  .then(result => {
-    // Do something with the result set in result.rows.
-  })
-  .catch(err => {
-    // Handle the error.
-  });
+const sql = 'select name from flavors where calories < 150';
+try {
+  const result = await pg.query(sql);
+  // Do something with the result set in result.rows.
+} catch (e) {
+  // Handle the error.
+}
 
 const sql = 'select name from flavors where calories < $1 and cost < $2';
-pg.query(sql, 200, 3)
-  .then(result => {
-    // Do something with the result set in result.rows.
-  })
-  .catch(err => {
-    // Handle the error.
-  });
+try {
+  const result = await pg.query(sql, 200, 3);
+  // Do something with the result set in result.rows.
+} catch (e) {
+  // Handle the error.
+}
 ```
 
 ## `updateById`
@@ -156,12 +150,12 @@ This updates a record in a given table by id.
 It requires the table to have a column named "id".
 
 ```js
-pg.updateById('flavors', 7, {name: 'chocolate', calories: 200})
-  .then(result => {
-    // Do something with the result set in result.rows.
-    // result.rows[0] will be an object describing the updated row.
-  })
-  .catch(err => {
-    // Handle the error.
-  });
+try {
+  const result = pg.updateById(
+    'flavors', 7, {name: 'chocolate', calories: 200});
+  // Do something with the result set in result.rows.
+  // result.rows[0] will be an object describing the updated row.
+} catch (e) {
+  // Handle the error.
+}
 ```
