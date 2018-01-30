@@ -87,7 +87,7 @@ This gets all records from a given table.
 ```js
 try {
   const result = await pg.getAll('flavors');
-  // Process data in the array result.rows.
+  // Process data in the array result.
 } catch (e) {
   // Handle the error.
 }
@@ -100,7 +100,7 @@ It requires the table to have a column named "id".
 ```js
 try {
   const result = await pg.getById('flavors', 7);
-  // Process data in the array result.rows.
+  // Process data in the array result.
 } catch (e) {
   // Handle the error.
 }
@@ -116,7 +116,7 @@ and their values are the values to insert.
 try {
   const result = pg.insert('flavors', {name: 'vanilla', calories: 100});
   // Do something after successful insert.
-  // result.rows[0] will be an object describing the inserted row.
+  // result will be the id of the newly inserted row.
 } catch (e) {
   // Handle the error.
 }
@@ -131,7 +131,7 @@ It is used by several of the other functions.
 const sql = 'select name from flavors where calories < 150';
 try {
   const result = await pg.query(sql);
-  // Do something with the result set in result.rows.
+  // Do something with the result set in result.
 } catch (e) {
   // Handle the error.
 }
@@ -139,7 +139,7 @@ try {
 const sql = 'select name from flavors where calories < $1 and cost < $2';
 try {
   const result = await pg.query(sql, 200, 3);
-  // Do something with the result set in result.rows.
+  // Do something with the result set in result.
 } catch (e) {
   // Handle the error.
 }
@@ -153,8 +153,8 @@ It requires the table to have a column named "id".
 try {
   const result = pg.updateById(
     'flavors', 7, {name: 'chocolate', calories: 200});
-  // Do something with the result set in result.rows.
-  // result.rows[0] will be an object describing the updated row.
+  // Do something with the result set in result.
+  // result will be an object describing the updated row.
 } catch (e) {
   // Handle the error.
 }

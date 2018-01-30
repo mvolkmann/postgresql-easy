@@ -1,6 +1,6 @@
 {
   "name": "postgresql-easy",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A Node package for interacting with a PostgreSQL database",
   "main": "index.js",
   "scripts": {
